@@ -15,11 +15,11 @@ class Solution:
                             new_board[i][col_idx] = 1
                                      
                         new_col_idx = col_idx - (k - i)
-                        if 0 <= new_col_idx and new_col_idx < n and board[i][new_col_idx] == 0:
+                        if 0 <= new_col_idx and new_col_idx < n:
                             new_board[i][new_col_idx] = 1
                                      
                         new_col_idx = col_idx + (k - i)
-                        if 0 <= new_col_idx and new_col_idx < n and board[i][new_col_idx] == 0:
+                        if 0 <= new_col_idx and new_col_idx < n:
                             new_board[i][new_col_idx] = 1
                                    
                     new_board[k][col_idx] = 2
