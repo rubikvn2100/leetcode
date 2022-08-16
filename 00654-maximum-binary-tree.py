@@ -10,12 +10,9 @@ class Solution:
         if n == 0:
             return None
         
-        max_val = nums[0]
-        max_idx =      0
-        for i, num in enumerate(nums):
-            if num > max_val: 
-                max_val = num
-                max_idx = i
+        max_val = max(nums)
+        max_idx = nums.index(max_val)
+
                 
         print(nums, max_val, max_idx)
                 
