@@ -14,7 +14,8 @@ class Solution:
             
     def findDuplicateSubtrees(self, root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
         MAX_INT = 10**9
-        uniqueTreeDataList = []
+        uniqueTreeDataDict = {}
+        uniqueNumNodeSet = set()
         def analyzeTree(root: Optional[TreeNode]):
             if not root: 
                 return self.TreeData()
@@ -22,23 +23,23 @@ class Solution:
             lst_TreeData = analyzeTree(root.left)
             rst_TreeData = analyzeTree(root.right)
             currentNumNode  = 1 + lst_TreeData.numNode + rst_TreeData.numNode 
-            currentPreOrder = [root.val]
+            currentPreOrder = '*' + str(root.val)
             if root.left or root.right:
-                currentPreOrder += lst_TreeData.preOrder if root.left  else [MAX_INT]
-                currentPreOrder += rst_TreeData.preOrder if root.right else [MAX_INT]
-            
-            for treeData in uniqueTreeDataList:
-                if currentNumNode == treeData.numNode and currentPreOrder == treeData.preOrder:
-                    treeData.numOccurrence += 1
-                    return treeData
+                currentPreOrder += lst_TreeData.preOrder if root.left  else '*'
+                currentPreOrder += rst_TreeData.preOrder if root.right else '*'
+  
+            if currentNumNode in uniqueNumNodeSet and currentPreOrder in uniqueTreeDataDict:
+                uniqueTreeDataDict[currentPreOrder].numOccurrence += 1
+                return uniqueTreeDataDict[currentPreOrder]             
             
             current_TreeData = self.TreeData(currentNumNode, currentPreOrder, 1, root)
-            uniqueTreeDataList.append(current_TreeData)
+            uniqueTreeDataDict[currentPreOrder] = current_TreeData
+            uniqueNumNodeSet.add(current_TreeData.numNode)
             return current_TreeData
         
         analyzeTree(root)
         duplicateTreeRoot = []
-        for treeData in uniqueTreeDataList:
+        for treeData in uniqueTreeDataDict.values():
             if treeData.numOccurrence > 1:
                 duplicateTreeRoot.append(treeData.sampleTree)
                 
