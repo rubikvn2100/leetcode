@@ -4,10 +4,9 @@ class Solution:
         for char in s:
             freq_dict[char] = freq_dict.get(char, 0) + 1
         
-        maxPalindromeLength = 0
+        maxPalindromeLength = len(s)
         isOddFreq = False
         for char, freq in freq_dict.items():
-            maxPalindromeLength += freq
             if freq & 1:
                 maxPalindromeLength -= 1
                 isOddFreq = True
